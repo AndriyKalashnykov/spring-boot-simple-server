@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: generic-pipeline
+metadata:
+  name: generic-pipeline
+objects:
+- kind: "BuildConfig"
+  apiVersion: "v1"
+  metadata:
+    labels:
+      application: ${APPLICATION_NAME}
+    name: "${APPLICATION_NAME}-pipeline"
+  spec:
+    source:
+      type: Git
+      git:
+        uri: ${PIPELINE_REPOSITORY_URL}
+        ref: ${PIPELINE_REPOSITORY_REF}
+      contextDir: ${PIPELINE_REPOSITORY_CONTEXT_DIR}
+    triggers:
+    - type: "GitHub"
+      github:
+        secret: ${GITHUB_WEBHOOK_SECRET}
+    - type: "ConfigChange"
+    strategy:
+      type: "JenkinsPipeline"
+      jenkinsPipelineStrategy:
+        jenkinsfilePath: ${PIPELINE_SCRIPT}
+        env:
+        - name: SOURCE_CODE_URL
+          value: ${SOURCE_CODE_URL}
+        - name: SOURCE_CODE_BRANCH
+          value: ${SOURCE_CODE_BRANCH}
+        - name: SKIP_TLS
+          value: "true"
+parameters:
+- description: The name for the application.
+  name: APPLICATION_NAME
+  required: true
+  value: spring-boot-simple-server
+- description: Git source URI for application
+  name: PIPELINE_REPOSITORY_URL
+  required: true
+  value: https://github.com/AndriyKalashnykov/spring-boot-simple-server
+- description: Git branch/tag reference
+  name: PIPELINE_REPOSITORY_REF
+  value: "master"
+- description: Path within Git project to build; empty for root project directory.
+  name: PIPELINE_REPOSITORY_CONTEXT_DIR
+  value:
+- description: Path within Git project pointing to the pipeline run script
+  name: PIPELINE_SCRIPT
+  value: jenkins/Jenkinsfile
+- description: Git source URI for application
+  name: SOURCE_CODE_URL
+  required: true
+  value: https://github.com/AndriyKalashnykov/spring-boot-simple-server
+- description: Git branch/tag reference
+  name: SOURCE_CODE_REF
+  value: "master"
+- description: GitHub trigger secret
+  from: '[a-zA-Z0-9]{8}'
+  generate: expression
+  name: GITHUB_WEBHOOK_SECRET
+  required: true
