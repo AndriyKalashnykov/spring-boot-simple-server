@@ -8,6 +8,14 @@ openshift.withCluster() {
   env.STAGE1 = "${projectBase}-dev"
   env.STAGE2 = "${projectBase}-stage"
   env.STAGE3 = "${projectBase}-prod"
+  sh """
+     set +x
+     echo "${NAMESPACE}"
+     echo "${APP_NAME}"
+     echo "${STAGE1}"
+     echo "${STAGE2}"
+     echo "${STAGE3}"
+  """
 }
 
 
@@ -38,9 +46,10 @@ pipeline {
         //TODO change to openshift.apply
         sh """
           set +x
+        """
           //oc apply -f templates/build.yml -n ${BUILD_PROJECT}
           //echo ${BUILD_PROJECT}
-        """
+
 
         script {
           openshift.withCluster() {
