@@ -1,3 +1,6 @@
+import jenkins.model.*
+jenkins = Jenkins.instance
+
 openshift.withCluster() {
   env.NAMESPACE = openshift.project()
   env.APP_NAME = "${env.JOB_NAME}".replaceAll(/-?pipeline-?/, '').replaceAll(/-?${env.NAMESPACE}-?/, '')
@@ -35,12 +38,14 @@ pipeline {
 
         //TODO change to openshift.apply
         sh """
+          set +x
           oc apply -f templates/build.yml -n ${BUILD_PROJECT}
         """
 
         script {
           openshift.withCluster() {
-            openshift.startBuild("${APP_NAME}", "--from-dir=oc-build", "--wait", "--follow")
+            //openshift.startBuild("${APP_NAME}", "--from-dir=oc-build", "--wait", "--follow")
+            openshift.selector("bc", "${APP_NAME}").startBuild("--from-dir=oc-build", "--wait")
           }
         }
       }
