@@ -39,7 +39,8 @@ pipeline {
         //TODO change to openshift.apply
         sh """
           set +x
-          oc apply -f templates/build.yml -n ${BUILD_PROJECT}
+          //oc apply -f templates/build.yml -n ${BUILD_PROJECT}
+          echo ${BUILD_PROJECT}
         """
 
         script {

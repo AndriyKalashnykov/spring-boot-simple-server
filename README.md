@@ -13,6 +13,6 @@ oc process -f https://raw.githubusercontent.com/AndriyKalashnykov/spring-boot-si
 
 To cleanup
 ```
-oc delete all -l app=spring-boot-simple-server
+oc delete all -l application=spring-boot-simple-server
 ```
 
