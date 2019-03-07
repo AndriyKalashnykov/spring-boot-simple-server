@@ -2,7 +2,7 @@ import jenkins.model.*
 
 openshift.withCluster() {
   env.NAMESPACE = openshift.project()
-  env.APP_NAME = "${env.JOB_NAME}".replaceAll(/-?pipeline-?/, '').replaceAll(/-?${env.NAMESPACE}-?/, '')
+  env.APP_NAME = "${env.JOB_NAME}".replaceAll(/-?pipeline-?/, '').replaceAll(/-?${env.NAMESPACE}-?/, '').replaceAll("/","")
   echo "Starting Pipeline for ${APP_NAME}..."
   def projectBase = "${env.NAMESPACE}".replaceAll(/-dev/, '')
   env.STAGE1 = "${projectBase}-dev"
