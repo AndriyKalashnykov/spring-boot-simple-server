@@ -46,9 +46,9 @@ pipeline {
         //TODO change to openshift.apply
         sh """
           set +x
-          oc create imagestream spring-boot-simple-server
-          oc process -f templates/build.yml | oc create -f -
-          oc process -f templates/deployment.yml | oc create -f -
+          oc apply imagestream spring-boot-simple-server -f
+          oc process -f templates/build.yml | oc apply -f -
+          oc process -f templates/deployment.yml | oc apply -f -
         """
 
         //oc apply -f templates/build.yml -n ${env.NAMESPACE}
