@@ -15,7 +15,6 @@ openshift.withCluster() {
      echo "${STAGE1}"
      echo "${STAGE2}"
      echo "${STAGE3}"
-     echo "${BUILD_PROJECT}"
   """
 }
 
