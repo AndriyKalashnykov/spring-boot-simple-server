@@ -5,7 +5,7 @@ labels:
 metadata:
   name: generic-java-build
 objects:
-- apiVersion: build.openshift.io/v1
+- apiVersion: v1
   kind: BuildConfig
   metadata:
     labels:
