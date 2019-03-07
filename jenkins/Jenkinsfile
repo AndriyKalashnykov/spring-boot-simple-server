@@ -46,8 +46,10 @@ pipeline {
         //TODO change to openshift.apply
         sh """
           set +x
-          oc apply -f templates/build.yml -n ${NAMESPACE}
+          oc process -f templates/build.yml | oc create -f -
         """
+
+        //oc apply -f templates/build.yml -n ${env.NAMESPACE}
 
         script {
           openshift.withCluster() {
