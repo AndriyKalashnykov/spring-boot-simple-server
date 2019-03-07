@@ -53,8 +53,8 @@ pipeline {
 
         script {
           openshift.withCluster() {
-            openshift.startBuild("${APP_NAME}", "--from-dir=oc-build", "--wait", "--follow")
-            //openshift.selector("bc", "${APP_NAME}").startBuild("--from-dir=oc-build", "--wait")
+            openshift.startBuild("${APP_NAME}", "--from-file=oc-build/deployments/spring-boot-simple-server-0.0.1-SNAPSHOT.jar", "--wait", "--follow")
+            //openshift.startBuild("--from-dir=oc-build", "--wait")
             //openshift.selector("bc", "spring-boot-simple-server").startBuild("--from-file=oc-build/deployments/spring-boot-simple-server-0.0.1-SNAPSHOT.jar", "--wait")
           }
         }

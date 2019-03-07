@@ -5,17 +5,23 @@ labels:
 metadata:
   name: generic-java-build
 objects:
-- apiVersion: v1
+`- apiVersion: build.openshift.io/v1
   kind: BuildConfig
   metadata:
     labels:
       application: ${APPLICATION_NAME}
     name: ${APPLICATION_NAME}
   spec:
+    failedBuildsHistoryLimit: 5
+    successfulBuildsHistoryLimit: 5
+    nodeSelector: {}
     output:
       to:
         kind: ImageStreamTag
         name: ${APPLICATION_NAME}:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
     source:
       binary: {}
       type: Binary
@@ -26,6 +32,7 @@ objects:
           name: ${IMAGE_STREAM_TAG_NAME}
           namespace: ${IMAGE_STREAM_NAMESPACE}
       type: Source
+    triggers: []
 parameters:
 - description: The name for the application.
   name: APPLICATION_NAME
