@@ -5,7 +5,7 @@ openshift.withCluster() {
   env.APP_NAME = "${env.JOB_NAME}".replaceAll(/-?pipeline-?/, '').replaceAll(/-?${env.NAMESPACE}-?/, '').replaceAll("/","")
   echo "Starting Pipeline for ${APP_NAME}..."
   def projectBase = "${env.NAMESPACE}".replaceAll(/-dev/, '')
-  env.STAGE1 = "${projectBase}-dev"
+  env.STAGE1 = "${projectBase}"
   env.STAGE2 = "${projectBase}-stage"
   env.STAGE3 = "${projectBase}-prod"
   sh """
@@ -17,7 +17,6 @@ openshift.withCluster() {
      echo "${STAGE3}"
   """
 }
-
 
 pipeline {
 
@@ -92,21 +91,21 @@ pipeline {
       }
     }
 
-     stage('Promote to Dev') {
+     stage('Promote to Stage') {
        steps {
          script {
            openshift.withCluster() {
-             openshift.tag("${env.NAMESPACE}/${env.APP_NAME}:latest", "${env.STAGE1}/${env.APP_NAME}:latest")
+             openshift.tag("${env.STAGE1}/${env.APP_NAME}:latest", "${env.STAGE2}/${env.APP_NAME}:latest")
            }
          }
        }
      }
 
-     stage ('Verify Deployment to Dev') {
+     stage ('Verify Deployment to Stage') {
        steps {
          script {
            openshift.withCluster() {
-               openshift.withProject("${STAGE1}") {
+               openshift.withProject("${STAGE2}") {
                def dcObj = openshift.selector('dc', env.APP_NAME).object()
                def podSelector = openshift.selector('pod', [deployment: "${APP_NAME}-${dcObj.status.latestVersion}"])
                podSelector.untilEach {
