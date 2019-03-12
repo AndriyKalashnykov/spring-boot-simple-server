@@ -30,7 +30,7 @@ pipeline {
         git url: "${SOURCE_CODE_URL}"
         sh "mvn clean install -q"
       }
-    }
+   }
 
     stage('Create Image Stream') {
         when {
@@ -92,32 +92,32 @@ pipeline {
       }
     }
 
-    // stage('Promote to Stage') {
-    //   steps {
-    //     script {
-    //       openshift.withCluster() {
-    //         openshift.tag("${env.STAGE1}/${env.APP_NAME}:latest", "${env.STAGE2}/${env.APP_NAME}:latest")
-    //       }
-    //     }
-    //   }
-    // }
-    //
-    // stage ('Verify Deployment to Stage') {
-    //   steps {
-    //     script {
-    //       openshift.withCluster() {
-    //           openshift.withProject("${STAGE2}") {
-    //           def dcObj = openshift.selector('dc', env.APP_NAME).object()
-    //           def podSelector = openshift.selector('pod', [deployment: "${APP_NAME}-${dcObj.status.latestVersion}"])
-    //           podSelector.untilEach {
-    //               echo "pod: ${it.name()}"
-    //               return it.object().status.containerStatuses[0].ready
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+     stage('Promote to Dev') {
+       steps {
+         script {
+           openshift.withCluster() {
+             openshift.tag("${env.NAMESPACE}/${env.APP_NAME}:latest", "${env.STAGE1}/${env.APP_NAME}:latest")
+           }
+         }
+       }
+     }
+
+     stage ('Verify Deployment to Dev') {
+       steps {
+         script {
+           openshift.withCluster() {
+               openshift.withProject("${STAGE1}") {
+               def dcObj = openshift.selector('dc', env.APP_NAME).object()
+               def podSelector = openshift.selector('pod', [deployment: "${APP_NAME}-${dcObj.status.latestVersion}"])
+               podSelector.untilEach {
+                   echo "pod: ${it.name()}"
+                   return it.object().status.containerStatuses[0].ready
+               }
+             }
+           }
+         }
+       }
+     }
 
 
   }
