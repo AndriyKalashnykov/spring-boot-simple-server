@@ -21,5 +21,5 @@ oc process -f templates/build.yml | oc apply -f -
 oc process -f templates/deployment.yml | oc apply -f -
 
 oc project fuse7
-oc process -f stemplates/pipeline.yml | oc create -f -
+oc process -f templates/pipeline.yml | oc create -f -
 
