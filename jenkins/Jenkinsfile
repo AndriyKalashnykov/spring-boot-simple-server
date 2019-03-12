@@ -1,7 +1,5 @@
 #!/usr/bin/env groovy
 
-@Library('github.com/fabric8io/fabric8-pipeline-library@master')
-
 import jenkins.model.*
 
 openshift.withCluster() {
