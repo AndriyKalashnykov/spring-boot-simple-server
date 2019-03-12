@@ -2,6 +2,7 @@
 
 Create pipeline using Jenkinsfile
 ```
+oc project fuse7
 oc process -f https://raw.githubusercontent.com/AndriyKalashnykov/spring-boot-simple-server/master/templates/pipeline.yml | oc create -f -
 ```
 
