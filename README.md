@@ -26,3 +26,12 @@ oc delete all -l application=spring-boot-simple-server
 
 ##### Declarative pipelines
 https://developers.redhat.com/blog/2017/11/20/building-declarative-pipelines-openshift-dsl-plugin/
+
+
+##### Login with Jenkins user
+```
+oc sa get-token jenkins  
+oc login --token=
+whoami
+```
+
