@@ -25,14 +25,18 @@ oc adm policy add-role-to-user admin jenkins -n fuse7
 oc adm policy add-role-to-user admin jenkins -n fuse7-stage
 
 # create image stream
-oc create imagestream spring-boot-simple-server
+oc create -f templates/is.yml
+#oc create imagestream spring-boot-simple-server
+
 oc process -f templates/build.yml | oc apply -f -
 oc process -f templates/deployment.yml | oc apply -f -
 
 oc project fuse7-stage
 
 # create image stream
-oc create imagestream spring-boot-simple-server
+oc create -f templates/is.yml
+#oc create imagestream spring-boot-simple-server
+#oc create -f templates/is.jenkins.maven.yml
 
 oc process -f templates/build.yml | oc apply -f -
 oc process -f templates/deployment.yml | oc apply -f -
@@ -42,5 +46,4 @@ oc project fuse7
 oc process -f templates/pipeline.yml | oc create -f -
 #oc process -f https://raw.githubusercontent.com/AndriyKalashnykov/spring-boot-simple-server/master/templates/pipeline.yml | oc create -f -
 
-#oc process -f templates/is.yml | oc create -f -
 

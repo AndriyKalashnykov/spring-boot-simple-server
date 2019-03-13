@@ -20,7 +20,7 @@ Cleanup
 Cleanup Jenkins
 
 ```
-./clenup-jenkins.sh
+./cleanup-jenkins.sh
 ```
 
 ##### Declarative pipelines

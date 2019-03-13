@@ -1,0 +1,14 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: jenkins-agent-maven
+spec:
+  tags:
+    - annotations:
+        tags: jenkins
+      from:
+        kind: DockerImage
+        name: quay.io/cloudfirst/jenkins-agent-maven-35-centos7:latest
+      name: latest
+      referencePolicy:
+        type: Local
