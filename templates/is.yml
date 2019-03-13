@@ -1,0 +1,12 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: spring-boot-simple-server
+  selfLink: /apis/image.openshift.io/v1/namespaces/fuse7/imagestreams/spring-boot-simple-server
+  labels:
+    application: spring-boot-simple-server
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: docker-registry.default.svc:5000/fuse7/spring-boot-simple-server

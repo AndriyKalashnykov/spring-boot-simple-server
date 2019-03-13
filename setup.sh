@@ -40,4 +40,7 @@ oc process -f templates/deployment.yml | oc apply -f -
 # create and start pipeline
 oc project fuse7
 oc process -f templates/pipeline.yml | oc create -f -
+#oc process -f https://raw.githubusercontent.com/AndriyKalashnykov/spring-boot-simple-server/master/templates/pipeline.yml | oc create -f -
+
+#oc process -f templates/is.yml | oc create -f -
 
