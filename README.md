@@ -6,13 +6,6 @@ oc project fuse7
 oc process -f https://raw.githubusercontent.com/AndriyKalashnykov/spring-boot-simple-server/master/templates/pipeline.yml | oc create -f -
 ```
 
-Steps performed by Jenkinsfile pipeline
-```
-oc create imagestream spring-boot-simple-server
-oc process -f templates/build.yml | oc create -f -
-oc process -f templates/deployment.yml | oc create -f -
-```
-
 #####URL
 
 ```
@@ -20,8 +13,9 @@ curl -s http://$(oc get route spring-boot-simple-server --template='{{ .spec.hos
 ```
 
 Cleanup
+
 ```
-oc delete all -l application=spring-boot-simple-server
+./cleanup.sh
 ```
 
 ##### Declarative pipelines
