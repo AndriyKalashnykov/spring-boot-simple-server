@@ -11,7 +11,7 @@ spec:
         tags: spring-boot-simple-server
       from:
         kind: DockerImage
-        name: docker-registry.default.svc:5000/fuse7/spring-boot-simple-server:latest
+        name: fuse7/spring-boot-simple-server:latest
       name: latest
       referencePolicy:
         type: Local
