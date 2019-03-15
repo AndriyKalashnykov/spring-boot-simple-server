@@ -41,8 +41,19 @@ oc create -f templates/is.yml
 oc process -f templates/build.yml | oc apply -f -
 oc process -f templates/deployment.yml | oc apply -f -
 
-# create and start pipeline
 oc project fuse7
+
+# Create ACME Controller (Supports e.g. Let's Encrypt)
+#oc create -fhttps://raw.githubusercontent.com/tnozicka/openshift-acme/master/deploy/letsencrypt-live/single-namespace/{role,serviceaccount,imagestream,deployment}.yaml
+oc create -ftemplates/openshift-acme/deploy/letsencrypt-live/single-namespace/{role,serviceaccount,imagestream,deployment}.yaml
+oc policy add-role-to-user openshift-acme --role-namespace="$(oc project --short)" -z openshift-acme
+
+# Create HTTPS route
+oc create route edge https-spring-boot-simple-server --service=spring-boot-simple-server
+oc patch route https-spring-boot-simple-server -p '{"metadata":{"annotations":{"kubernetes.io/tls-acme":"true"}}}'
+
+
+# create and start pipeline
 oc process -f templates/pipeline.yml | oc create -f -
 #oc process -f https://raw.githubusercontent.com/AndriyKalashnykov/spring-boot-simple-server/master/templates/pipeline.yml | oc create -f -
 

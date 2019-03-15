@@ -1,0 +1,35 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/tls-acme-awaiting-authorization-at-url: https://acme-v01.api.letsencrypt.org/acme/authz/DBeRCZe1YCHUUlKKjDKpSe3YEeW32uOs3wc5JsOjlRQ
+    kubernetes.io/tls-acme-awaiting-authorization-owner: https://acme-v01.api.letsencrypt.org/acme/reg/53330140
+  creationTimestamp: 2019-03-15T04:22:49Z
+  labels:
+    application: spring-boot-simple-server
+    template: basic-spring-boot
+  name: https-spring-boot-simple-server
+  namespace: fuse7
+  resourceVersion: "235769142"
+  selfLink: /apis/route.openshift.io/v1/namespaces/fuse7/routes/https-spring-boot-simple-server
+  uid: fdcde259-46d9-11e9-98a4-02e0bae989b4
+spec:
+  host: spring-boot-simple-server-fuse7.6923.rh-us-east-1.openshiftapps.com
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: spring-boot-simple-server
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: 2019-03-15T04:22:49Z
+      status: "True"
+      type: Admitted
+    host: spring-boot-simple-server-fuse7.6923.rh-us-east-1.openshiftapps.com
+    routerCanonicalHostname: elb.6923.rh-us-east-1.openshiftapps.com
+    routerName: router
+    wildcardPolicy: None
