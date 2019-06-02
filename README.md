@@ -59,5 +59,3 @@ oc get events -w
 
 3) Run docker below, then two times use change Value to what docker tells you too, before hitting enter use "Test Record Set" button to make sure that Value is updates
 # docker run -it --rm --name certbot -v "/tmp/etc_letsencrypt:/etc/letsencrypt" -v "/tmp/var_lib_letsencrypt:/var/lib/letsencrypt" certbot/certbot certonly --manual --preferred-challenges dns -d *.spring-boot-simple-server-fuse7.6923.rh-us-east-1.openshiftapps.com -d spring-boot-simple-server-fuse7.6923.rh-us-east-1.openshiftapps.com
-
-
